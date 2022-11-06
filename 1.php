@@ -1,16 +1,23 @@
 <?php
 
+function productCreation( string $name, float $price): stdClass {
+    $products = new stdClass();
+    $products->name = $name;
+    $products->price = $price;
+    return $products;
+}
+
 $products = [
-    (object) ["name"=> "Water"],
-    (object) ["name"=> "Chips"],
-    (object) ["name"=> "Snickers"],
-    (object) ["name"=> "Candy"],
-    (object) ["name"=> "Juice"]
+    productCreation("Water",200),
+    productCreation("Chips",70),
+    productCreation("Snickers",150),
+    productCreation("Candy",84),
+    productCreation("Juice",76),
 ];
 
 $coins = [1, 2, 5, 10, 20, 50, 100, 200];
 $monets = [];
-$machineCoins = [200=>1, 100=>1, 50=>1, 20=>1, 10=>1, 5=>1, 2=>1, 1=>1];
+$machineCoins = [200=>0, 100=>0, 50=>0, 20=>0, 10=>1, 5=>1, 2=>0, 1=>1];
 
 $insertedMoney = 0;
 echo "To end inserting type stop\n";
@@ -30,39 +37,21 @@ while ($insertMoney !== "stop") {
     $insertMoney = readline();
 }
 
-echo "Price of products : Water - 200 | Chips - 70 | Snickers - 150 | Candy - 84 | Juice - 176\n";
-echo "Choose the product = Water(0) | Chips(1) | Snickers(2) | Candy(3) | Juice(4)\n";
-$insertedProduct = readline("Choose a product : ");
-$selectedProduct = $products[$insertedProduct];
+$insertedProduct = readline ("Price of products : [0]Water - 200 |
+ [1]Chips - 70 |
+ [2]Snickers - 150 |
+ [3]Candy - 84 |
+ [4]Juice - 176\n");
 
-//Selecting a product
-switch ($selectedProduct->name) {
-    case "Water":
-        $price = 200;
-        break;
-    case "Chips":
-        $price = 70;
-        break;
-    case "Snickers":
-        $price = 150;
-        break;
-    case "Candy":
-        $price = 84;
-        break;
-    case "Juice":
-        $price = 176;
-        break;
-    default:
-        echo "Invalid product\n";
-        $price = 0;
-}
+$selectedProduct = $products[$insertedProduct]->price;
+
 //Checking if costumer has enough money for product
-if($insertedMoney < $price){
+if($insertedMoney < $selectedProduct){
     echo 'Not enough money' . PHP_EOL;
     exit;
 }
-else if ($price !== 0) {
-    $insertedMoney -= $price;
+else if ($selectedProduct !== 0) {
+    $insertedMoney -= $selectedProduct;
 
     echo "Purchased!" . " Money available {$insertedMoney}$\n";
 }
