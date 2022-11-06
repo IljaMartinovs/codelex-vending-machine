@@ -10,7 +10,7 @@ $products = [
 
 $coins = [1, 2, 5, 10, 20, 50, 100, 200];
 $monets = [];
-$machineCoins = [200=>0, 100=>0, 50=>0, 20=>0, 10=>0, 5=>0, 2=>0, 1=>0];
+$machineCoins = [200=>1, 100=>1, 50=>1, 20=>1, 10=>1, 5=>1, 2=>1, 1=>1];
 
 $insertedMoney = 0;
 echo "To end inserting type stop\n";
@@ -57,61 +57,65 @@ switch ($selectedProduct->name) {
         $price = 0;
 }
 //Checking if costumer has enough money for product
-    if($insertedMoney < $price){
-        echo 'Not enough money' . PHP_EOL;
-        exit;
-    }
-    else if ($price !== 0) {
-        $insertedMoney -= $price;
-        echo "Purchased!" . " Money available {$insertedMoney}$\n";
-    }
+if($insertedMoney < $price){
+    echo 'Not enough money' . PHP_EOL;
+    exit;
+}
+else if ($price !== 0) {
+    $insertedMoney -= $price;
 
-while($price!=0) {
-    if (intdiv($price, $coins[7]) > 0 && $machineCoins[200] != 0) {
-        while (intdiv($price, $coins[7]) > 0) {
-            $price -= $coins[7];
+    echo "Purchased!" . " Money available {$insertedMoney}$\n";
+}
+$insertedChange = $insertedMoney;
+$changeCoins  = $machineCoins;
+
+//Checking if machine has money for a change
+while($insertedMoney!=0) {
+    if (intdiv($insertedMoney, $coins[7]) > 0 && $machineCoins[200] > 0) {
+        while (intdiv($insertedMoney, $coins[7]) > 0 && $machineCoins[200] > 0) {
+            $insertedMoney -= $coins[7];
             $machineCoins[200] = $machineCoins[200] - 1;
         }
     }
-    else if (intdiv($price, $coins[6]) > 0 && $machineCoins[100] > 0) {
-        while (intdiv($price, $coins[6]) > 0) {
-            $price -= $coins[6];
+    else if (intdiv($insertedMoney, $coins[6]) > 0 && $machineCoins[100] > 0) {
+        while (intdiv($insertedMoney, $coins[6]) > 0 && $machineCoins[100] > 0) {
+            $insertedMoney -= $coins[6];
             $machineCoins[100] = $machineCoins[100] - 1;
         }
     }
-    else if (intdiv($price, $coins[5]) > 0 && $machineCoins[50] != 0) {
-        while (intdiv($price, $coins[5]) > 0) {
-            $price -= $coins[5];
+    else if (intdiv($insertedMoney, $coins[5]) > 0 && $machineCoins[50] > 0) {
+        while (intdiv($insertedMoney, $coins[5]) > 0 && $machineCoins[50] > 0) {
+            $insertedMoney -= $coins[5];
             $machineCoins[50] = $machineCoins[50] - 1;
         }
     }
-    else if (intdiv($price, $coins[4]) > 0 && $machineCoins[20] != 0) {
-        while (intdiv($price, $coins[4]) > 0) {
-            $price -= $coins[4];
+    else if (intdiv($insertedMoney, $coins[4]) > 0 && $machineCoins[20] > 0) {
+        while (intdiv($insertedMoney, $coins[4]) > 0 && $machineCoins[20] > 0) {
+            $insertedMoney -= $coins[4];
             $machineCoins[20] = $machineCoins[20] - 1;
         }
     }
-    else if (intdiv($price, $coins[3]) > 0 && $machineCoins[10] != 0) {
-        while (intdiv($price, $coins[3]) > 0) {
-            $price -= $coins[3];
+    else if (intdiv($insertedMoney, $coins[3]) > 0 && $machineCoins[10] > 0) {
+        while (intdiv($insertedMoney, $coins[3]) > 0 && $machineCoins[10] > 0) {
+            $insertedMoney -= $coins[3];
             $machineCoins[10] = $machineCoins[10] - 1;
         }
     }
-    else if (intdiv($price, $coins[2]) > 0 && $machineCoins[5] != 0) {
-        while (intdiv($price, $coins[2]) > 0) {
-            $price -= $coins[2];
+    else if (intdiv($insertedMoney, $coins[2]) > 0 && $machineCoins[5] > 0) {
+        while (intdiv($insertedMoney, $coins[2]) > 0 && $machineCoins[5] > 0) {
+            $insertedMoney -= $coins[2];
             $machineCoins[5] = $machineCoins[5] - 1;
         }
     }
-    else if (intdiv($price, $coins[1]) > 0 && $machineCoins[2] != 0) {
-        while (intdiv($price, $coins[1]) > 0) {
-            $price -= $coins[1];
+    else if (intdiv($insertedMoney, $coins[1]) > 0 && $machineCoins[2] > 0) {
+        while (intdiv($insertedMoney, $coins[1]) > 0 && $machineCoins[2] > 0) {
+            $insertedMoney -= $coins[1];
             $machineCoins[2] = $machineCoins[2] - 1;
         }
     }
-    else if (intdiv($price, $coins[0]) > 0 && $machineCoins[1] != 0) {
-        while (intdiv($price, $coins[0]) > 0) {
-            $price -= $coins[0];
+    else if (intdiv($insertedMoney, $coins[0]) > 0 && $machineCoins[1] > 0) {
+        while (intdiv($insertedMoney, $coins[0]) > 0 && $machineCoins[1] > 0) {
+            $insertedMoney -= $coins[0];
             $machineCoins[1] = $machineCoins[1] - 1;
         }
     }
@@ -122,44 +126,49 @@ while($price!=0) {
 }
 
 // Checking for a change
-while($insertedMoney!=0) {
-        while (intdiv($insertedMoney, $coins[7]) > 0 && $machineCoins[200]>0) {
-            $insertedMoney -= $coins[7];
-            array_push($monets, 200);
-        }
-        while ((intdiv($insertedMoney, $coins[6])) > 0 && $machineCoins[100]>0) {
-            $insertedMoney -= $coins[6];
-            array_push($monets, 100);
-        }
-        while (intdiv($insertedMoney, $coins[5]) > 0 && $machineCoins[50]>0) {
-            $insertedMoney -= $coins[5];
-            array_push($monets, 50);
-        }
-        while (intdiv($insertedMoney, $coins[4]) > 0 && $machineCoins[20]>0) {
-            $insertedMoney -= $coins[4];
-            array_push($monets, 20);
-        }
-        while (intdiv($insertedMoney, $coins[3]) > 0 && $machineCoins[10]>0) {
-            $insertedMoney -= $coins[3];
-            array_push($monets, 10);
-        }
-        while (intdiv($insertedMoney, $coins[2]) > 0 && $machineCoins[5]>0) {
-            $insertedMoney -= $coins[2];
-            array_push($monets, 5);
-        }
-        while (intdiv($insertedMoney, $coins[1]) > 0 && $machineCoins[2]>0) {
-            $insertedMoney -= $coins[1];
-            array_push($monets, 2);
-        }
-        while (intdiv($insertedMoney, $coins[0]) > 0 && $machineCoins[1]>0) {
-            $insertedMoney -= $coins[0];
-            array_push($monets, 1);
-        }
+while($insertedChange!=0) {
+    while (intdiv($insertedChange, $coins[7]) > 0 && $changeCoins[200]>0) {
+        $insertedChange -= $coins[7];
+        array_push($monets, 200);
+    }
+    while ((intdiv($insertedChange, $coins[6])) > 0 && $changeCoins[100]>0) {
+        $insertedChange -= $coins[6];
+        array_push($monets, 100);
+
+    }
+    while (intdiv($insertedChange, $coins[5]) > 0 && $changeCoins[50]>0) {
+        $insertedChange -= $coins[5];
+        array_push($monets, 50);
+
+    }
+    while (intdiv($insertedChange, $coins[4]) > 0 && $changeCoins[20]>0) {
+        $insertedChange -= $coins[4];
+        array_push($monets, 20);
+
+    }
+    while (intdiv($insertedChange, $coins[3]) > 0 && $changeCoins[10]>0) {
+        $insertedChange -= $coins[3];
+        array_push($monets, 10); //$insertedChange = 6
+
+    }
+    while (intdiv($insertedChange, $coins[2]) > 0 && $changeCoins[5]>0) {
+        $insertedChange -= $coins[2];
+        array_push($monets, 5); //$insertedChange = 1
+
+    }
+    while (intdiv($insertedChange, $coins[1]) > 0 && $changeCoins[2]>0) {
+        $insertedChange -= $coins[1];
+        array_push($monets, 2);
+
+    }
+    while (intdiv($insertedChange, $coins[0]) > 0 && $changeCoins[1]>0) {
+        $insertedChange -= $coins[0];
+        array_push($monets, 1);
+    }
 }
 
 echo "Your change is ";
 for($i=0; $i < count($monets); $i++){
-      echo  $monets[$i] . "$ ";
+    echo  $monets[$i] . "$ ";
 }
 echo PHP_EOL;
-
